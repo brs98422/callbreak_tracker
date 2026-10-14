@@ -761,3 +761,38 @@ h1 {
     width: 100%;
     margin-top: 2px;
 }
+/* ============================================
+   WATERMARK — subtle "BRS" signature
+   Fixed bottom-center, chrome silver, no interference
+   ============================================ */
+.brs-watermark {
+    position: fixed;
+    left: 50%;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--chrome-dim);
+    opacity: 0.28;
+    text-shadow: 0 0 8px rgba(201, 209, 230, 0.15);
+
+    z-index: 50;
+    white-space: nowrap;
+}
+
+/* Slight lift on hover for desktop, ignored on mobile */
+@media (hover: hover) {
+    .brs-watermark {
+        transition: opacity 0.25s ease, color 0.25s ease;
+    }
+    body:hover .brs-watermark {
+        opacity: 0.5;
+        color: var(--chrome);
+    }
+}
