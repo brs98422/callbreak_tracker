@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Callbreak Score Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="logoReset" style="cursor: pointer;">🃏 Callbreak Tracker</h1>
+        <div class="subtitle">5 rounds · 4 players · 13 tricks each</div>
+
+        <!-- SETUP -->
+        <div id="setup" class="card">
+            <div class="round-label" style="margin-bottom:12px;">Players</div>
+            <div id="setupPlayers"></div>
+            <button class="primary-btn" id="startBtn">Start Game</button>
+        </div>
+
+        <!-- BIDDING -->
+        <div id="bidding" class="card hidden">
+            <div class="round-header">
+                <div class="round-label" id="bidRoundLabel">Round 1</div>
+                <div class="phase-label">Enter Bids</div>
+            </div>
+            <div id="bidPlayers"></div>
+            <div id="bidWarning" class="warning hidden"></div>
+            <button class="primary-btn" id="startRoundBtn" disabled>Start Round</button>
+        </div>
+
+        <!-- TRICKS -->
+        <div id="tricks" class="card hidden">
+            <div class="round-header">
+                <div class="round-label" id="trickRoundLabel">Round 1</div>
+                <div class="phase-label">Enter Tricks Won</div>
+            </div>
+            <div id="trickPlayers"></div>
+            <div id="trickWarning" class="warning hidden"></div>
+            <button class="primary-btn" id="finishRoundBtn" disabled>Finish Round</button>
+        </div>
+
+        <!-- SCORES -->
+        <div id="scores" class="card hidden">
+            <div class="round-header">
+                <div class="round-label">Scoreboard</div>
+                <div class="phase-label" id="scoresPhaseLabel"></div>
+            </div>
+            <table class="score-table" id="scoreTable"></table>
+            <div class="actions">
+                <button class="primary-btn" id="nextRoundBtn">Next Round</button>
+            </div>
+            <button class="secondary-btn" id="resetBtn">Reset Game</button>
+        </div>
+
+        <!-- FINAL -->
+        <div id="final" class="card hidden">
+            <div class="round-header">
+                <div class="round-label">🏆 Final Result</div>
+            </div>
+            <div id="winnerText" style="text-align:center;font-size:18px;font-weight:600;padding:12px 0;color:#3fb950;">
+            </div>
+            <table class="score-table" id="finalTable"></table>
+            <button class="secondary-btn" id="newGameBtn" style="margin-top:14px;">New Game</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
