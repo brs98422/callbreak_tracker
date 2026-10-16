@@ -1,0 +1,25 @@
+{
+    "name": "Callbreak Tracker",
+    "short_name": "Callbreak",
+    "description": "Score tracker for the card game Callbreak — 4 players, 5 rounds.",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#05070d",
+    "theme_color": "#05070d",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
