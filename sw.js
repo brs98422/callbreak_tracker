@@ -4,7 +4,7 @@
 // Bump CACHE_VERSION whenever you update files.
 // ============================================
 
-const CACHE_VERSION = 'callbreak-v1';
+const CACHE_VERSION = 'callbreak-v2';
 const ASSETS = [
     './',
     './index.html',
@@ -38,6 +38,25 @@ self.addEventListener('activate', event => {
     );
 });
 
+// Helper: rebuild a cached Response to strip Safari's 'redirected' flag.
+// Safari refuses to serve cached responses that carry this flag, throwing:
+// "Response served by service worker has redirections"
+function cleanResponse(response) {
+    if (!response || !response.redirected) return response;
+
+    // Rebuild the response with the same body/status/headers, but no redirected flag.
+    const cleaned = response.clone();
+    const headers = new Headers(cleaned.headers);
+
+    return cleaned.blob().then(body => {
+        return new Response(body, {
+            status: cleaned.status,
+            statusText: cleaned.statusText,
+            headers: headers
+        });
+    });
+}
+
 // Fetch — cache-first for same-origin, fall back to network
 self.addEventListener('fetch', event => {
     // Only handle GET requests from our own origin
@@ -48,7 +67,9 @@ self.addEventListener('fetch', event => {
 
     event.respondWith(
         caches.match(event.request).then(cached => {
-            if (cached) return cached;
+            if (cached) {
+                return cleanResponse(cached);
+            }
 
             return fetch(event.request).then(response => {
                 // Cache successful responses for next time
@@ -60,8 +81,11 @@ self.addEventListener('fetch', event => {
             }).catch(() => {
                 // Offline fallback: serve index.html for navigation requests
                 if (event.request.mode === 'navigate') {
-                    return caches.match('./index.html');
+                    return caches.match('./index.html').then(fallback => {
+                        return fallback ? cleanResponse(fallback) : Response.error();
+                    });
                 }
+                return Response.error();
             });
         })
     );
